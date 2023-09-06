@@ -28,8 +28,8 @@
                 <td>@adminUser.Email</td>
                 <td>@adminUser.Role</td>
                 <td>
-                    <a asp-action="EditAdmin" asp-controller="SuperAdmin" asp-route-id="@adminUser.Id" class="btn btn-primary">Edit</a>
-                    <a href="@Url.Action("DeleteAdmin", "SuperAdmin", new { id = adminUser.Id })" class="btn btn-danger">Delete</a>
+                    <a asp-action="EditUser" asp-controller="SuperAdmin" asp-route-id="@adminUser.Id" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("DeleteUser", "SuperAdmin", new { id = adminUser.Id })" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

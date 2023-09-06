@@ -15,12 +15,10 @@ namespace ProductManagement.Controllers
     public class SuperAdminController : Controller
     {
         private readonly ISuperAdminService _superAdminService;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public SuperAdminController(ISuperAdminService superAdminService, RoleManager<IdentityRole> roleManager)
+        public SuperAdminController(ISuperAdminService superAdminService)
         {
             _superAdminService = superAdminService;
-            _roleManager = roleManager;
         }
 
         public IActionResult SuperAdminDashboard()
@@ -53,7 +51,6 @@ namespace ProductManagement.Controllers
         }
         public IActionResult EditAdmin(Guid id)
         {
-            // Retrieve the admin user by ID
             var admin = _superAdminService.GetAdminById(id);
 
             if (admin != null)
@@ -94,7 +91,48 @@ namespace ProductManagement.Controllers
 
             return View(model);
         }
+        public IActionResult EditUser(Guid id)
+        {
+            var user = _superAdminService.GetUserById(id);
 
+            if (user != null)
+            {
+                var editModel = new EditAdminViewModel
+                {
+                    Id = id,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Role = user.Role 
+                };
+
+                return View(editModel);
+            }
+
+            return RedirectToAction("UserList");
+        }
+
+        [HttpPost]
+        public IActionResult EditUser(EditAdminViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var adminToUpdate = new EditAdminViewModel
+                {
+                    Id = model.Id,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Role = model.Role
+                };
+
+                _superAdminService.EditUser(adminToUpdate);
+
+                return RedirectToAction("UserList");
+            }
+
+            return View(model);
+        }
 
         public IActionResult DeleteAdmin(Guid id)
         {
@@ -109,27 +147,19 @@ namespace ProductManagement.Controllers
                 return RedirectToAction("SuperAdminDashboard");
             }
         }
-        public IActionResult Create()
-        {
-            return View();
-        }
 
-        public IActionResult RoleList()
+        public IActionResult DeleteUser(Guid id)
         {
-            var roles = _roleManager.Roles;
-            return View(roles);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(IdentityRole model)
-        {
-            if (!_roleManager.RoleExistsAsync(model.Name).GetAwaiter().GetResult())
+            try
             {
-                await _roleManager.CreateAsync(new IdentityRole(model.Name));
+                _superAdminService.DeleteUser(id); // Updated method name
+                return RedirectToAction("UserList");
             }
-            return RedirectToAction("RoleList");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting user: {ex.Message}");
+                return RedirectToAction("UserList");
+            }
         }
-
-
     }
 }

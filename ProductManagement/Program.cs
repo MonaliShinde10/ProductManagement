@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using ProductManagement.Services;
 using ProductManagement.Models.ViewModel;
+using ProductManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,23 +32,21 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
-// Configure the authorization policies
 
-/*builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("SuperAdminPolicy", policy => policy.RequireRole("SuperAdmin"));
-    options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
-    options.AddPolicy("UserPolicy", policy => policy.RequireRole("User"));
-});
-*/
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-
-    options.LoginPath = "/Account/Login";  
-    options.LogoutPath = "/Account/logout";
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
     options.AccessDeniedPath = "/Account/AccessDenied";
+
 });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None;
+    //options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
+
 
 builder.Services.AddAuthentication().AddCookie();
 

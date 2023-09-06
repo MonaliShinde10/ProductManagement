@@ -9,9 +9,12 @@ namespace ProductManagement.Data.Repositories
         SuperAdminDashboardViewModel GetAdminById(Guid id);
         void AddAdmin(AddAdminViewModel admin);
         void EditAdmin(EditAdminViewModel admin);
-        void DeleteAdmin(Guid id); 
+        void DeleteAdmin(Guid id);
+        void DeleteUser(Guid id);
+        void EditUser(EditAdminViewModel model);
         List<SuperAdminDashboardViewModel> AllAdmins();
         List<SuperAdminUserModel> UserLists();
+        SuperAdminDashboardViewModel GetUserById(Guid id);
 
 
     }

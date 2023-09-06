@@ -116,5 +116,40 @@ namespace TestProduct
 
             productServiceMock.Verify(service => service.DeleteProduct(productId), Times.Once);
         }
+
+        [Fact]
+        public void TestViewProducts()
+        {
+            var productServiceMock = new Mock<IProductService>();
+            var userController = new UserController(productServiceMock.Object);
+
+            var products = new List<ProductModel>
+            {
+                new ProductModel
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "iPhone",
+                    Price = 10000
+                },
+                new ProductModel
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Vivo",
+                    Price = 20000
+                }
+            };
+
+            productServiceMock.Setup(service => service.AllProducts())
+                .Returns(products);
+
+            // Act
+            var result = userController.ViewProducts() as ViewResult;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(products, result.Model);
+            Assert.Null(result.ViewName);
+
+        }
     }
 }

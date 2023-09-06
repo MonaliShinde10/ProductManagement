@@ -20,29 +20,24 @@ namespace TestProduct
         [Fact]
         public async Task Register_ValidModel_ReturnsRedirectToLogin()
         {
-            // Arrange
             var userServiceMock = new Mock<IUserService>();
             userServiceMock.Setup(mock => mock.RegisterAsync(It.IsAny<RegisterViewModel>())).ReturnsAsync(true);
             var controller = new AccountController(userServiceMock.Object);
             var model = new RegisterViewModel();
 
-            // Act
             var result = await controller.Register(model) as RedirectToActionResult;
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("Login", result.ActionName);
         }
         [Fact]
         public async Task Register_InvalidModel_ReturnsViewWithModel()
         {
-            // Arrange
             var userServiceMock = new Mock<IUserService>();
             var controller = new AccountController(userServiceMock.Object);
             controller.ModelState.AddModelError("ErrorKey", "ErrorMessage");
             var model = new RegisterViewModel();
 
-            // Act
             var result = await controller.Register(model) as ViewResult;
 
             // Assert

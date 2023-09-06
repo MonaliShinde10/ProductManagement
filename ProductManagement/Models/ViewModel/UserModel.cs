@@ -11,9 +11,6 @@ namespace ProductManagement.Models.ViewModel
         [Required]
         public string LastName { get; set; }
 
-        public static explicit operator UserModel(AddAdminViewModel v)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
