@@ -17,7 +17,7 @@ namespace TestProduct
 {
     public class AccountControllerTest
     {
-     /*   [Fact]
+        [Fact]
         public async Task Register_ValidModel_ReturnsRedirectToLogin()
         {
             // Arrange
@@ -32,8 +32,8 @@ namespace TestProduct
             // Assert
             Assert.NotNull(result);
             Assert.Equal("Login", result.ActionName);
-        }*/
-       /* [Fact]
+        }
+        [Fact]
         public async Task Register_InvalidModel_ReturnsViewWithModel()
         {
             // Arrange
@@ -48,7 +48,7 @@ namespace TestProduct
             // Assert
             Assert.NotNull(result);
             Assert.Equal(model, result.Model);
-        }*/
+        }
 
         [Fact]
         public async Task Login_ValidCredentialsAsUser_RedirectsToCorrectDashboard()
