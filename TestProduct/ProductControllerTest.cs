@@ -34,11 +34,7 @@ namespace TestProduct
 
             productServiceMock.Setup(service => service.GetAllProducts())
                 .Returns(products);
-
-            // Act
             var result = productController.AllProducts() as ViewResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(products, result.Model);
             Assert.Null(result.ViewName);
@@ -59,11 +55,7 @@ namespace TestProduct
 
             productServiceMock.Setup(service => service.AddProduct(It.IsAny<ProductModel>()))
                 .Verifiable();
-
-            // Act
             var result = productController.AddProduct(productToAdd) as RedirectToActionResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("AllProducts", result.ActionName);
 
@@ -86,11 +78,7 @@ namespace TestProduct
 
             productServiceMock.Setup(service => service.GetProductById(productId))
                 .Returns(productToEdit);
-
-            // Act
             var result = productController.EditProduct(productId) as ViewResult;
-
-            // Assert
             Assert.NotNull(result);
             var model = Assert.IsType<ProductModel>(result.Model);
             Assert.Equal(productToEdit, model);
@@ -106,11 +94,7 @@ namespace TestProduct
 
             productServiceMock.Setup(service => service.DeleteProduct(productId))
                 .Verifiable();
-
-            // Act
             var result = productController.DeleteProduct(productId) as RedirectToActionResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("AllProducts", result.ActionName);
 
@@ -141,11 +125,7 @@ namespace TestProduct
 
             productServiceMock.Setup(service => service.AllProducts())
                 .Returns(products);
-
-            // Act
             var result = userController.ViewProducts() as ViewResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(products, result.Model);
             Assert.Null(result.ViewName);

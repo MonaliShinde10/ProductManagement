@@ -4,78 +4,80 @@ using ProductManagement.Models.DomainModel;
 using ProductManagement.Models.ViewModel;
 using System;
 
-[Authorize(Roles = "Admin")]
-/*[Authorize(Policy = "AdminPolicy")]
-*/
-public class ProductController : Controller
+namespace ProductManagement.Controllers
 {
-    private readonly IProductService _productService;
-
-    public ProductController(IProductService productService)
+    [Authorize(Roles = "Admin")]
+    public class ProductController : Controller
     {
-        _productService = productService;
-    }
+        private readonly IProductService _productService;
 
-    public IActionResult AdminDashboard()
-    {
-        var adminViewModel = new AdminDashboardViewModel();
-        return View("AdminDashboard", adminViewModel);
-    }
-
-    public IActionResult AllProducts()
-    {
-        var products = _productService.GetAllProducts();
-        return View(products);
-    }
-
-    public IActionResult AddProduct()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult AddProduct(ProductModel product)
-    {
-        if (ModelState.IsValid)
+        public ProductController(IProductService productService)
         {
-            _productService.AddProduct(product);
-            return RedirectToAction("AllProducts");
+            _productService = productService;
         }
-        return View(product);
-    }
 
-    public IActionResult EditProduct(Guid id)
-    {
-        var product = _productService.GetProductById(id);
-        if (product != null)
+        public IActionResult AdminDashboard()
         {
+            var adminViewModel = new AdminDashboardViewModel();
+            return View("AdminDashboard", adminViewModel);
+        }
+
+        public IActionResult AllProducts()
+        {
+            var products = _productService.GetAllProducts();
+            return View(products);
+        }
+
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct(ProductModel product)
+        {
+            if (ModelState.IsValid)
+            {
+                _productService.AddProduct(product);
+                return RedirectToAction("AllProducts");
+            }
             return View(product);
         }
-        return RedirectToAction("AllProducts");
-    }
 
-    [HttpPost]
-    public IActionResult EditProduct(ProductModel product)
-    {
-        if (ModelState.IsValid)
+        public IActionResult EditProduct(Guid id)
         {
-            _productService.UpdateProduct(product);
+            var product = _productService.GetProductById(id);
+            if (product != null)
+            {
+                return View(product);
+            }
             return RedirectToAction("AllProducts");
         }
-        return View(product);
+
+        [HttpPost]
+        public IActionResult EditProduct(ProductModel product)
+        {
+            if (ModelState.IsValid)
+            {
+                _productService.UpdateProduct(product);
+                return RedirectToAction("AllProducts");
+            }
+            return View(product);
+        }
+
+
+        public IActionResult DeleteProduct(Guid id)
+        {
+            try
+            {
+                _productService.DeleteProduct(id);
+                return RedirectToAction("AllProducts");
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
     }
 
-  
-    public IActionResult DeleteProduct(Guid id)
-    {
-        try
-        {
-            _productService.DeleteProduct(id);
-            return RedirectToAction("AllProducts");
-        }
-        catch (Exception)
-        {
-            return NotFound();
-        }
-    }
 }

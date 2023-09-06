@@ -61,7 +61,7 @@ namespace ProductManagement.Controllers
                     Email = admin.Email,
                     FirstName = admin.FirstName,
                     LastName = admin.LastName,
-                    Role = admin.Role // Assuming Role is part of admin
+                    Role = admin.Role 
                 };
 
                 return View(editModel);
@@ -152,7 +152,7 @@ namespace ProductManagement.Controllers
         {
             try
             {
-                _superAdminService.DeleteUser(id); // Updated method name
+                _superAdminService.DeleteUser(id);
                 return RedirectToAction("UserList");
             }
             catch (Exception ex)

@@ -18,7 +18,6 @@ namespace TestProduct
         [Fact]
         public void EditUser_ValidModel_RedirectsToUserList()
         {
-            // Arrange
             var adminServiceMock = new Mock<ISuperAdminService>();
             var controller = new SuperAdminController(adminServiceMock.Object);
 
@@ -31,10 +30,8 @@ namespace TestProduct
                 Role = "NewRole"
             };
 
-            // Act
             var result = controller.EditUser(model) as RedirectToActionResult;
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("UserList", result.ActionName);
 
@@ -44,7 +41,6 @@ namespace TestProduct
         [Fact]
         public void EditAdmin_ValidModel_RedirectsToUserList()
         {
-            // Arrange
             var adminServiceMock = new Mock<ISuperAdminService>();
             var controller = new SuperAdminController(adminServiceMock.Object);
 
@@ -57,10 +53,7 @@ namespace TestProduct
                 Role = "NewRole"
             };
 
-            // Act
             var result = controller.EditAdmin(model) as RedirectToActionResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("SuperAdminDashboard", result.ActionName);
 
@@ -83,11 +76,8 @@ namespace TestProduct
 
             superAdminServiceMock.Setup(service => service.AddAdmin(It.IsAny<AddAdminViewModel>()))
                 .Verifiable();
-
-            // Act
             var result = superAdminController.AddAdmin(adminToAdd) as RedirectToActionResult;
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("SuperAdminDashboard", result.ActionName);
 
@@ -122,11 +112,8 @@ namespace TestProduct
 
             superAdminServiceMock.Setup(service => service.AllAdmins())
                 .Returns(admins);
-
-            // Act
             var result = superAdminController.SuperAdminDashboard() as ViewResult;
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(admins, result.Model);
             Assert.Null(result.ViewName);
@@ -134,22 +121,17 @@ namespace TestProduct
         [Fact]
         public void UserList_ReturnsViewWithUserList()
         {
-            // Arrange
             var mockSuperAdminService = new Mock<ISuperAdminService>();
             var expectedUserList = new List<SuperAdminUserModel>
             {
                 new SuperAdminUserModel { Id = "1", Email = "user1@example.com", FirstName = "John", LastName = "Doe", Role = "User" },
                 new SuperAdminUserModel { Id = "2", Email = "user2@example.com", FirstName = "Jane", LastName = "Smith", Role = "User" }
-                // Add more user data as needed
             };
 
             mockSuperAdminService.Setup(service => service.UserLists()).Returns(expectedUserList);
             var controller = new SuperAdminController(mockSuperAdminService.Object);
 
-            // Act
             var result = controller.UserList() as ViewResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expectedUserList, result.Model); 
         }
@@ -164,11 +146,8 @@ namespace TestProduct
 
             superAdminServiceMock.Setup(service => service.DeleteAdmin(adminId))
                 .Verifiable();
-
-            // Act
             var result = superAdminController.DeleteAdmin(adminId) as RedirectToActionResult;
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("SuperAdminDashboard", result.ActionName);
 
@@ -179,7 +158,6 @@ namespace TestProduct
         [Fact]
         public void TestDeleteUser()
         {
-            // Arrange
             var superAdminServiceMock = new Mock<ISuperAdminService>();
             var superAdminController = new SuperAdminController(superAdminServiceMock.Object);
 
@@ -188,10 +166,8 @@ namespace TestProduct
             superAdminServiceMock.Setup(service => service.DeleteUser(userId)) 
                 .Verifiable();
 
-            // Act
             var result = superAdminController.DeleteUser(userId) as RedirectToActionResult;
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("UserList", result.ActionName);
 
@@ -202,7 +178,6 @@ namespace TestProduct
         [Fact]
         public void TestEditUser_InvalidModel()
         {
-            // Arrange
             var superAdminServiceMock = new Mock<ISuperAdminService>();
             var superAdminController = new SuperAdminController(superAdminServiceMock.Object);
 
@@ -218,14 +193,13 @@ namespace TestProduct
             superAdminServiceMock.Setup(service => service.EditUser(It.IsAny<EditAdminViewModel>()))
                 .Verifiable();
 
-            superAdminController.ModelState.AddModelError("Key", "ErrorMessage"); // Simulate ModelState error
+            superAdminController.ModelState.AddModelError("Key", "ErrorMessage"); 
 
-            // Act
             var result = superAdminController.EditUser(model) as ViewResult;
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(model, result.Model); // Ensure the invalid model is passed back to the view
+            Assert.Equal(model, result.Model); 
 
             superAdminServiceMock.Verify(service => service.EditUser(It.IsAny<EditAdminViewModel>()), Times.Never);
         }
@@ -248,15 +222,10 @@ namespace TestProduct
             superAdminServiceMock.Setup(service => service.EditAdmin(It.IsAny<EditAdminViewModel>()))
                 .Verifiable();
 
-            superAdminController.ModelState.AddModelError("Key", "ErrorMessage"); // Simulate ModelState error
-
-            // Act
+            superAdminController.ModelState.AddModelError("Key", "ErrorMessage"); 
             var result = superAdminController.EditAdmin(model) as ViewResult;
-
-            // Assert
             Assert.NotNull(result);
-            Assert.Equal(model, result.Model); // Ensure the invalid model is passed back to the view
-
+            Assert.Equal(model, result.Model);
             superAdminServiceMock.Verify(service => service.EditAdmin(It.IsAny<EditAdminViewModel>()), Times.Never);
         }
     }

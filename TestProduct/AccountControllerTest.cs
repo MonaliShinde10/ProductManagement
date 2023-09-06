@@ -39,8 +39,6 @@ namespace TestProduct
             var model = new RegisterViewModel();
 
             var result = await controller.Register(model) as ViewResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(model, result.Model);
         }
@@ -48,7 +46,6 @@ namespace TestProduct
         [Fact]
         public async Task Login_ValidCredentialsAsUser_RedirectsToCorrectDashboard()
         {
-            // Arrange
             var userServiceMock = new Mock<IUserService>();
 
             userServiceMock.Setup(service => service.LoginAsync(It.IsAny<LoginViewModel>()))
@@ -66,11 +63,7 @@ namespace TestProduct
                 Email = "validemail@example.com",
                 Password = "validpassword"
             };
-
-            // Act
             var result = await controller.Login(loginViewModel) as RedirectToActionResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("UserDashboard", result.ActionName);
             Assert.Equal("User", result.ControllerName);
@@ -78,7 +71,6 @@ namespace TestProduct
         [Fact]
         public async Task Login_ValidCredentialsAsSuperAdmin_RedirectsToCorrectDashboard()
         {
-            // Arrange
             var userServiceMock = new Mock<IUserService>();
 
             userServiceMock.Setup(service => service.LoginAsync(It.IsAny<LoginViewModel>()))
@@ -97,10 +89,7 @@ namespace TestProduct
                 Password = "validpassword"
             };
 
-            // Act
             var result = await controller.Login(loginViewModel) as RedirectToActionResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("SuperAdminDashboard", result.ActionName);
             Assert.Equal("SuperAdmin", result.ControllerName);
@@ -108,7 +97,6 @@ namespace TestProduct
         [Fact]
         public async Task Login_ValidCredentialsAsAdmin_RedirectsToCorrectDashboard()
         {
-            // Arrange
             var userServiceMock = new Mock<IUserService>();
 
             userServiceMock.Setup(service => service.LoginAsync(It.IsAny<LoginViewModel>()))
@@ -127,10 +115,8 @@ namespace TestProduct
                 Password = "validpassword"
             };
 
-            // Act
             var result = await controller.Login(loginViewModel) as RedirectToActionResult;
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("AdminDashboard", result.ActionName);
             Assert.Equal("Product", result.ControllerName);
@@ -138,10 +124,8 @@ namespace TestProduct
         [Fact]
         public async Task Login_InvalidCredentials_ReturnsViewWithError()
         {
-            // Arrange
             var userServiceMock = new Mock<IUserService>();
 
-            // Set up the mock to return false for LoginAsync
             userServiceMock.Setup(service => service.LoginAsync(It.IsAny<LoginViewModel>()))
                 .ReturnsAsync(false);
 
@@ -152,10 +136,7 @@ namespace TestProduct
                 Password = "invalidpassword"
             };
 
-            // Act
             var result = await controller.Login(loginViewModel) as ViewResult;
-
-            // Assert
             Assert.NotNull(result);
             Assert.False(controller.ModelState.IsValid);
             Assert.Contains("Invalid login attempt.", controller.ModelState[""].Errors[0].ErrorMessage);
