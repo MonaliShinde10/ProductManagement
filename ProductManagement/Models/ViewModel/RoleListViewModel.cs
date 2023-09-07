@@ -2,7 +2,7 @@
 {
     public class RoleListViewModel
     {
-        public List<string> Roles { get; set; }
+        public string RoleName { get; set; }
 
     }
 }

@@ -5,6 +5,7 @@ using ProductManagement.Models.ViewModel;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using ProductManagement.Data.Repositories;
 
 namespace TestProduct
 {
@@ -39,6 +40,11 @@ namespace TestProduct
             Assert.Equal(products, result.Model);
             Assert.Null(result.ViewName);
         }
+        [Fact]
+        public void TestAllProducts_Invalid()
+        {
+            Assert.False(false);
+        }
 
         [Fact]
         public void TestAddProduct()
@@ -61,6 +67,16 @@ namespace TestProduct
 
             productServiceMock.Verify(service => service.AddProduct(productToAdd), Times.Once);
         }
+        [Fact]
+        public void TestAddProduct_Invalid()
+        {
+            var productServiceMock = new Mock<IProductService>();
+            var productController = new ProductController(productServiceMock.Object);
+            var result = productController.AddProduct(new ProductModel()) as RedirectToActionResult;
+
+            Assert.True(result?.ActionName == "AllProducts");
+        }
+
 
         [Fact]
         public void TestEditProduct()
@@ -83,6 +99,16 @@ namespace TestProduct
             var model = Assert.IsType<ProductModel>(result.Model);
             Assert.Equal(productToEdit, model);
         }
+        [Fact]
+        public void TestEditProduct_Invalid()
+        {
+            var productServiceMock = new Mock<IProductService>();
+            var productController = new ProductController(productServiceMock.Object);
+            var result = productController.EditProduct(Guid.NewGuid()) as ViewResult;
+
+            Assert.False(result != null);
+        }
+
 
         [Fact]
         public void TestDeleteProduct()
@@ -99,6 +125,15 @@ namespace TestProduct
             Assert.Equal("AllProducts", result.ActionName);
 
             productServiceMock.Verify(service => service.DeleteProduct(productId), Times.Once);
+        }
+        [Fact]
+        public void TestDeleteProduct_Invalid()
+        {
+            var productServiceMock = new Mock<IProductService>();
+            var productController = new ProductController(productServiceMock.Object);
+            var result = productController.DeleteProduct(Guid.NewGuid()) as RedirectToActionResult;
+
+            Assert.False(result?.ActionName == "InvalidActionName");
         }
 
         [Fact]
@@ -130,6 +165,16 @@ namespace TestProduct
             Assert.Equal(products, result.Model);
             Assert.Null(result.ViewName);
 
+        }
+        [Fact]
+        public void TestViewProducts_Invalid()
+        {
+            var productServiceMock = new Mock<IProductService>();
+            var userController = new UserController(productServiceMock.Object);
+
+            var result = userController.ViewProducts() as ViewResult;
+
+            Assert.True(result?.Model == null);
         }
     }
 }

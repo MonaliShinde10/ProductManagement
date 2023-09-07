@@ -139,9 +139,24 @@ namespace TestProduct
             var result = await controller.Login(loginViewModel) as ViewResult;
             Assert.NotNull(result);
             Assert.False(controller.ModelState.IsValid);
-            Assert.Contains("Invalid login attempt.", controller.ModelState[""].Errors[0].ErrorMessage);
+            Assert.Contains("Invalid login attempt.", controller.ModelState?[""]?.Errors[0]?.ErrorMessage);
         }
 
+        [Fact]
+        public async Task Logout_ReturnsRedirectToAction_Index()
+        {
+            var userServiceMock = new Mock<IUserService>();
+            var signInManagerMock = new Mock<SignInManager<IdentityUser>>();
+
+            var controller = new AccountController(userServiceMock.Object);
+            var result = await controller.Logout();
+            Assert.IsType<RedirectToActionResult>(result);
+            var redirectResult = result as RedirectToActionResult;
+
+            Assert.Equal("Index", redirectResult?.ActionName);
+            Assert.Equal("Account", redirectResult?.ControllerName);
+           userServiceMock.Verify(service => service.LogoutAsync(), Times.Once);
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProductManagement.Data.Repositories;
 using ProductManagement.Models.DomainModel;
 using ProductManagement.Models.ViewModel;
 using System;

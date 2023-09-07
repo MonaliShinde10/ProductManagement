@@ -60,7 +60,6 @@ namespace ProductManagement.Data.Repositories
                 var currentRoles = _userManager.GetRolesAsync(user).Result;
                 if (!currentRoles.Contains(admin.Role))
                 {
-                    // Remove existing roles (if any) and add the new role
                     _userManager.RemoveFromRolesAsync(user, currentRoles).Wait();
                     _userManager.AddToRoleAsync(user, admin.Role).Wait();
                 }
@@ -261,6 +260,12 @@ namespace ProductManagement.Data.Repositories
             }
 
             return null;
+        }
+
+      
+        public IEnumerable<string> GetRoles()
+        {
+            return _roleManager.Roles.Select(r => r.Name);
         }
     }
 }

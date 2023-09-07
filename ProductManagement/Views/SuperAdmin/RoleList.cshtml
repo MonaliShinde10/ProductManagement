@@ -1,35 +1,33 @@
-﻿@using Microsoft.AspNetCore.Identity
-@model IEnumerable<IdentityRole>
+﻿@model IEnumerable<string>
 
 @{
-    ViewData["Title"] = "View Role";
+    ViewData["Title"] = "Role List";
     Layout = "_LayoutSuperAdmin";
 }
 
-<h2>Roles</h2>
 <br />
-<div>
-    <a asp-action="Create" class="btn btn-dark">Create Role</a>
-</div>
-<br />
+<h2>Role List</h2>
 
-<table class="table">
-    <caption>List of Roles</caption>
-
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var role in Model)
-        {
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@role.Id</td>
-                <td>@role.Name</td>
+                <th>Role Name</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var roleName in Model)
+            {
+                <tr>
+                    <td>@roleName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No roles found.</p>
+}
+

@@ -9,10 +9,6 @@
       "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\Monali.Shinde\\Desktop\\Xuint\\ProductManagement\\ProductManagement\\wwwroot\\css\\site.css",
-      "PackagePath": "staticwebassets\\css\\site.css"
-    },
-    {
       "Id": "C:\\Users\\Monali.Shinde\\Desktop\\Xuint\\ProductManagement\\ProductManagement\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4yc6OvvBBgvoyWoUKmMnMPKm2VnpeJ2yijXdrHW9ptM=",
+  "Hash": "XqPUeoW0t/dQEuu2pV15/+lIWajlT7CYb64uzRmqbDQ=",
   "Source": "ProductManagement",
   "BasePath": "_content/ProductManagement",
   "Mode": "Default",
@@ -66,23 +66,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\bootstrap.min.css"
-    },
-    {
-      "Identity": "C:\\Users\\Monali.Shinde\\Desktop\\Xuint\\ProductManagement\\ProductManagement\\wwwroot\\css\\site.css",
-      "SourceId": "ProductManagement",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Monali.Shinde\\Desktop\\Xuint\\ProductManagement\\ProductManagement\\wwwroot\\",
-      "BasePath": "_content/ProductManagement",
-      "RelativePath": "css/site.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
       "Identity": "C:\\Users\\Monali.Shinde\\Desktop\\Xuint\\ProductManagement\\ProductManagement\\wwwroot\\favicon.ico",

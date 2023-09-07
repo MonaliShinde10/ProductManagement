@@ -13,20 +13,16 @@ namespace ProductManagement.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
-
-
         public AccountController(IUserService userService)
         {
             _userService = userService;
             
         }
-      
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-
         [HttpPost]
 
         public async Task<IActionResult> Register(RegisterViewModel model)

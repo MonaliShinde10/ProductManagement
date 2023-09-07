@@ -161,5 +161,11 @@ namespace ProductManagement.Controllers
                 return RedirectToAction("UserList");
             }
         }
+      
+        public IActionResult RoleList() 
+        {
+            var roles = _superAdminService.GetRoles();
+            return View(roles);
+        }
     }
 }

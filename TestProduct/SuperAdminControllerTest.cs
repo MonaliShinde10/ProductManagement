@@ -228,5 +228,26 @@ namespace TestProduct
             Assert.Equal(model, result.Model);
             superAdminServiceMock.Verify(service => service.EditAdmin(It.IsAny<EditAdminViewModel>()), Times.Never);
         }
+        [Fact]
+        public void RoleList_ReturnsViewWithExpectedModel()
+        {
+            var mockSuperAdminService = new Mock<ISuperAdminService>();
+            var controller = new SuperAdminController(mockSuperAdminService.Object);
+            var expectedRoles = new List<string>
+            {
+                "Admin",
+                "User",
+                "Manager"
+            };
+            mockSuperAdminService.Setup(service => service.GetRoles()).Returns(expectedRoles);
+            var result = controller.RoleList() as ViewResult;
+            Assert.NotNull(result);
+            Assert.IsType<ViewResult>(result);
+            Assert.Null(result.ViewName);
+            Assert.IsType<List<string>>(result.Model);
+
+            var model = Assert.IsAssignableFrom<List<string>>(result.Model);
+            Assert.Equal(expectedRoles, model);
+        }
     }
 }

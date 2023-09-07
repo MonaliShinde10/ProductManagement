@@ -15,6 +15,8 @@ namespace ProductManagement.Data.Repositories
         List<SuperAdminDashboardViewModel> AllAdmins();
         List<SuperAdminUserModel> UserLists();
         SuperAdminDashboardViewModel GetUserById(Guid id);
+      
+        IEnumerable<string> GetRoles();
 
 
     }
